@@ -38,12 +38,20 @@ app.use('/upload', (req, res, next) => {
   next();
 });
 
-// Log InfluxDB connection status on startup
-influxDB.ping(5000).then(() => {
-  console.log('✅ Successfully connected to InfluxDB');
-}).catch((error) => {
-  console.error('❌ Failed to connect to InfluxDB:', error);
-});
+async function checkInfluxDBConnection() {
+  try {
+    const health = await influxDB.health();
+    if (health.status === 'pass') {
+      console.log('✅ Successfully connected to InfluxDB');
+    } else {
+      console.error('❌ InfluxDB health check failed:', health);
+    }
+  } catch (error) {
+    console.error('❌ Failed to connect to InfluxDB:', error);
+  }
+}
+
+checkInfluxDBConnection();
 
 // 📁 Serve static files
 app.use(express.static(path.join(__dirname)));
