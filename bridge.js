@@ -27,6 +27,24 @@ app.use((req, res, next) => {
   next();
 });
 
+// Additional detailed logging for /query and /upload endpoints
+app.use('/query', (req, res, next) => {
+  console.log('Processing /query endpoint');
+  next();
+});
+
+app.use('/upload', (req, res, next) => {
+  console.log('Processing /upload endpoint');
+  next();
+});
+
+// Log InfluxDB connection status on startup
+influxDB.ping(5000).then(() => {
+  console.log('✅ Successfully connected to InfluxDB');
+}).catch((error) => {
+  console.error('❌ Failed to connect to InfluxDB:', error);
+});
+
 // 📁 Serve static files
 app.use(express.static(path.join(__dirname)));
 
