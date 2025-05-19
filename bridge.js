@@ -82,6 +82,7 @@ app.post('/upload', async (req, res) => {
 // 📊 Query InfluxDB
 app.post('/query', async (req, res) => {
   const query = req.body;
+  console.log('Received query request with body:', query);
   if (!query) return res.status(400).send('Missing Flux query');
 
   try {

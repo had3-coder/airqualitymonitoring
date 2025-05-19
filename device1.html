@@ -397,8 +397,107 @@
       humidityChart.setOption(createGaugeOption("Humidity", 0, 100));
     }
 
-    function updateCharts(range) {
-      // We will no longer generate random data here, so this function can be modified or disabled.
+    async function updateCharts(range) {
+      // Construct Flux query based on selected range
+      let rangeDuration = '';
+      switch (range) {
+        case '5m':
+          rangeDuration = '5m';
+          break;
+        case '30m':
+          rangeDuration = '30m';
+          break;
+        case '1h':
+          rangeDuration = '1h';
+          break;
+        case '12h':
+          rangeDuration = '12h';
+          break;
+        default:
+          rangeDuration = '1h';
+      }
+
+      // Flux query to fetch air_quality data for device1 in the selected time range
+      const fluxQuery = `
+        from(bucket: "aqi_project")
+          |> range(start: -${rangeDuration})
+          |> filter(fn: (r) => r._measurement == "air_quality" and r.device == "device1")
+          |> pivot(rowKey:["_time"], columnKey: ["_field"], valueColumn: "_value")
+          |> keep(columns: ["_time", "CO", "NO2", "Temperature", "Humidity", "PM1_0", "PM2_5", "PM10"])
+          |> sort(columns: ["_time"])
+      `;
+
+      try {
+        const response = await fetch('/query', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/vnd.flux',
+          },
+          body: fluxQuery,
+        });
+
+        if (!response.ok) {
+          console.error('Failed to fetch data:', response.statusText);
+          return;
+        }
+
+        const csvText = await response.text();
+        const parsedData = parseCSVData(csvText);
+
+        updateChartsWithRealData(parsedData);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    }
+
+    // Parse CSV data returned from InfluxDB query into chart data format
+    function parseCSVData(csvText) {
+      const lines = csvText.trim().split('\n');
+      const headers = lines[0].split(',');
+
+      // Initialize arrays for each data field
+      const pm1 = [];
+      const pm2_5 = [];
+      const pm10 = [];
+      const co = [];
+      const no2 = [];
+      const temperature = [];
+      const humidity = [];
+
+      // Parse each line after header
+      for (let i = 1; i < lines.length; i++) {
+        const values = lines[i].split(',');
+
+        // Map columns by header index
+        const timeIndex = headers.indexOf('_time');
+        const coIndex = headers.indexOf('CO');
+        const no2Index = headers.indexOf('NO2');
+        const tempIndex = headers.indexOf('Temperature');
+        const humIndex = headers.indexOf('Humidity');
+        const pm1Index = headers.indexOf('PM1_0');
+        const pm2_5Index = headers.indexOf('PM2_5');
+        const pm10Index = headers.indexOf('PM10');
+
+        // Push values or 0 if missing
+        pm1.push(parseFloat(values[pm1Index]) || 0);
+        pm2_5.push(parseFloat(values[pm2_5Index]) || 0);
+        pm10.push(parseFloat(values[pm10Index]) || 0);
+        co.push(parseFloat(values[coIndex]) || 0);
+        no2.push(parseFloat(values[no2Index]) || 0);
+        temperature.push(parseFloat(values[tempIndex]) || 0);
+        humidity.push(parseFloat(values[humIndex]) || 0);
+      }
+
+      return {
+        pm1,
+        pm2_5,
+        pm10,
+        co,
+        no2,
+        temperature,
+        humidity,
+        aqi: pm2_5.length > 0 ? calculateAQI(pm2_5[pm2_5.length - 1]) : 0,
+      };
     }
 
     // New function to update charts with real data
