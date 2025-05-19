@@ -40,12 +40,28 @@ app.use('/upload', (req, res, next) => {
 
 async function checkInfluxDBConnection() {
   try {
-    const health = await influxDB.health();
-    if (health.status === 'pass') {
-      console.log('✅ Successfully connected to InfluxDB');
-    } else {
-      console.error('❌ InfluxDB health check failed:', health);
-    }
+    // The InfluxDB client does not have a health() method, so we test by querying the version
+    const queryApi = influxDB.getQueryApi(org);
+    const query = 'import "influxdata/influxdb/schema"\nschema.measurements(bucket: "' + bucket + '")';
+    let success = false;
+
+    const fluxObserver = {
+      next(row, tableMeta) {
+        success = true;
+      },
+      error(err) {
+        console.error('❌ Health check query failed', err);
+      },
+      complete() {
+        if (success) {
+          console.log('✅ Successfully connected to InfluxDB');
+        } else {
+          console.error('❌ InfluxDB health check query returned no data');
+        }
+      },
+    };
+
+    queryApi.queryRows(query, fluxObserver);
   } catch (error) {
     console.error('❌ Failed to connect to InfluxDB:', error);
   }
