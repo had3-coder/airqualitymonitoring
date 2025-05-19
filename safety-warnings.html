@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safety Warnings - AQI Monitor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#10B981',
+                        dark: '#1F2937',
+                        light: '#F9FAFB'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F3F4F6;
+        }
+        
+        .section-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+        }
+        
+        .section-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, #3B82F6, #10B981);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+    </style>
+</head>
+<body>
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <a href="user-guide.html" class="inline-flex items-center text-primary hover:text-primary-dark mb-8 transition-colors duration-200">
+            <i class="fas fa-arrow-left mr-3"></i> 
+            <span class="font-medium">Back to User Guide</span>
+        </a>
+
+        <div class="bg-white rounded-2xl shadow-xl p-8 md:p-10">
+            <header class="mb-12 text-center">
+                <h1 class="text-4xl font-bold text-dark mb-3 gradient-text">Safety Warnings</h1>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">Important safety information for proper device operation</p>
+            </header>
+
+            <section class="mb-12 section-card p-8 rounded-xl border border-gray-100">
+                <div class="flex items-start">
+                    <div class="bg-primary/10 p-3 rounded-lg mr-6">
+                        <i class="fas fa-exclamation-triangle text-primary text-2xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-semibold text-dark mb-4">Device Handling & Precautions</h2>
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-secondary mt-1 mr-3"></i>
+                                <div>
+                                    <span class="font-medium text-dark">Avoid Water & Extreme Conditions:</span>
+                                    <span class="text-gray-600">The device is not waterproof; avoid exposure to rain, direct water splashes, or high humidity areas.</span>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-secondary mt-1 mr-3"></i>
+                                <div>
+                                    <span class="font-medium text-dark">Proper Placement:</span>
+                                    <span class="text-gray-600">Keep the device away from direct sunlight, heat sources, and high airflow areas to prevent inaccurate readings.</span>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-secondary mt-1 mr-3"></i>
+                                <div>
+                                    <span class="font-medium text-dark">Safe Power Management:</span>
+                                    <span class="text-gray-600">Ensure proper wiring connections to prevent short circuits. Do not exceed voltage limits (6V for solar input, 3.7V for battery).</span>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-secondary mt-1 mr-3"></i>
+                                <div>
+                                    <span class="font-medium text-dark">Avoid Tampering:</span>
+                                    <span class="text-gray-600">Unauthorized modifications may cause damage or data inaccuracy.</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="mb-12 section-card p-8 rounded-xl border border-gray-100">
+                <div class="flex items-start">
+                    <div class="bg-primary/10 p-3 rounded-lg mr-6">
+                        <i class="fas fa-tools text-primary text-2xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-semibold text-dark mb-4">Emergency Procedures</h2>
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-secondary mt-1 mr-3"></i>
+                                <div>
+                                    <span class="font-medium text-dark">Sensor Malfunction:</span>
+                                    <span class="text-gray-600">Restart the device and recalibrate sensors. If the issue persists, replace the faulty sensor.</span>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-secondary mt-1 mr-3"></i>
+                                <div>
+                                    <span class="font-medium text-dark">Fire or Overheating Risk:</span>
+                                    <span class="text-gray-600">Immediately disconnect from power, move to a fire-safe location, and contact support.</span>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-secondary mt-1 mr-3"></i>
+                                <div>
+                                    <span class="font-medium text-dark">Data Transmission Failure:</span>
+                                    <span class="text-gray-600">Check Wi-Fi/GSM status, verify SIM card balance, and restart the device.</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section-card p-8 rounded-xl border border-gray-100">
+                <div class="flex items-start">
+                    <div class="bg-primary/10 p-3 rounded-lg mr-6">
+                        <i class="fas fa-recycle text-primary text-2xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-semibold text-dark mb-4">Disposal & Environmental Safety</h2>
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-secondary mt-1 mr-3"></i>
+                                <div>
+                                    <span class="font-medium text-dark">Do not dispose of in regular waste:</span>
+                                    <span class="text-gray-600">Batteries and electronic components should be taken to designated e-waste recycling centers.</span>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-secondary mt-1 mr-3"></i>
+                                <div>
+                                    <span class="font-medium text-dark">Recycle responsibly:</span>
+                                    <span class="text-gray-600">If replacing a sensor or battery, ensure proper disposal.</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <footer class="bg-gray-50 border-t border-gray-200 py-4 mt-12">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-gray-500 text-sm">
+                &copy; AQI 2025. All rights reserved.
+            </p>
+        </div>
+    </footer>
+</body>
+</html>

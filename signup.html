@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - AQI</title>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyBawdAvivw24kEJJcZ8pjOVKLnUCPlWxig",
+            authDomain: "project-aqi-43620.firebaseapp.com",
+            projectId: "project-aqi-43620",
+            storageBucket: "project-aqi-43620.appspot.com",
+            messagingSenderId: "853048957452",
+            appId: "1:853048957452:web:51b30fd41cab4658cdec29",
+            measurementId: "G-MVKRVKVVB0"
+        };
+        const app = firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        console.log("Firebase initialized successfully");
+    </script>
+</head>
+<body class="bg-gray-100">
+    <div class="min-h-screen flex items-center justify-center">
+        <div class="bg-white rounded-lg shadow-xl p-8 w-full max-w-md">
+            <div class="flex flex-col justify-between items-center mb-8">
+                <img src="logo.png" alt="aqi" width="100px" height="100px">
+                <p class="text-gray-600 mt-2">Create your account</p>
+            </div>
+
+            <form id="signupForm" class="space-y-6">
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                    <div class="mt-1 relative rounded-md shadow-sm">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fas fa-envelope text-gray-400"></i>
+                        </div>
+                        <input type="email" id="email" name="email" required
+                            class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md p-2 border"
+                            placeholder="your@email.com">
+                    </div>
+                </div>
+
+                <div>
+                    <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                    <div class="mt-1 relative rounded-md shadow-sm">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fas fa-lock text-gray-400"></i>
+                        </div>
+                        <input type="password" id="password" name="password" required minlength="8"
+                            class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 pr-10 sm:text-sm border-gray-300 rounded-md p-2 border"
+                            placeholder="••••••••">
+                        <div class="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer" onclick="togglePassword('password')">
+                            <i class="fas fa-eye text-gray-400 hover:text-gray-600" id="password-eye"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <label for="passwordConfirm" class="block text-sm font-medium text-gray-700">Confirm Password</label>
+                    <div class="mt-1 relative rounded-md shadow-sm">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fas fa-lock text-gray-400"></i>
+                        </div>
+                        <input type="password" id="passwordConfirm" name="passwordConfirm" required minlength="8"
+                            class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 pr-10 sm:text-sm border-gray-300 rounded-md p-2 border"
+                            placeholder="••••••••">
+                        <div class="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer" onclick="togglePassword('passwordConfirm')">
+                            <i class="fas fa-eye text-gray-400 hover:text-gray-600" id="passwordConfirm-eye"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <button type="submit"
+                        class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-800 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                        Sign Up
+                    </button>
+                </div>
+            </form>
+
+            <div class="mt-6 text-center">
+                <p class="text-sm text-gray-600">
+                    Already have an account?
+                    <a href="signin.html" class="font-medium text-blue-800 hover:text-blue-700">
+                        Sign in
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function togglePassword(fieldId) {
+            const field = document.getElementById(fieldId);
+            const eyeIcon = document.getElementById(`${fieldId}-eye`);
+            if (field.type === 'password') {
+                field.type = 'text';
+                eyeIcon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                field.type = 'password';
+                eyeIcon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        }
+
+        document.getElementById('signupForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const passwordConfirm = document.getElementById('passwordConfirm').value;
+            const submitBtn = document.querySelector('#signupForm button[type="submit"]');
+
+            if (password !== passwordConfirm) {
+                alert('Passwords do not match');
+                return;
+            }
+
+            try {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = 'Creating account...';
+                submitBtn.classList.add('opacity-75');
+
+                console.log('Attempting to create user with email:', email);
+                const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+                console.log('User created successfully:', userCredential.user);
+                
+                localStorage.setItem('user', JSON.stringify(userCredential.user));
+                window.location.href = 'signin.html';
+            } catch (error) {
+                console.error('Signup error:', error);
+                let errorMessage = 'Signup failed. ';
+                if (error.code === 'auth/email-already-in-use') {
+                    errorMessage += 'This email is already registered.';
+                } else if (error.code === 'auth/invalid-email') {
+                    errorMessage += 'The email address is invalid.';
+                } else if (error.code === 'auth/weak-password') {
+                    errorMessage += 'The password is too weak (min 6 characters).';
+                } else {
+                    errorMessage += error.message;
+                }
+                alert(errorMessage);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = 'Sign Up';
+                submitBtn.classList.remove('opacity-75');
+            }
+        });
+    </script>
+</body>
+</html>

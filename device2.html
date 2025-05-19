@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Device 2 - Air Quality Monitor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js"></script>
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyBawdAvivw24kEJJcZ8pjOVKLnUCPlWxig",
+        authDomain: "project-aqi-43620.firebaseapp.com",
+        projectId: "project-aqi-43620",
+        storageBucket: "project-aqi-43620.appspot.com",
+        messagingSenderId: "853048957452",
+        appId: "1:853048957452:web:51b30fd41cab4658cdec29",
+        measurementId: "G-MVKRVKVVB0",
+      };
+      const app = firebase.initializeApp(firebaseConfig);
+      const db = firebase.firestore();
+      const auth = firebase.auth();
+
+      document.addEventListener("DOMContentLoaded", function () {
+        // Real-time listener for location updates
+        db.collection("devices").doc("device2").onSnapshot((doc) => {
+          if (doc.exists) {
+            const location = doc.data().location;
+            document.querySelector(".device2-location").textContent = location || "Not Set";
+          } else {
+            console.log("No such document!");
+          }
+        }, (error) => {
+          console.error("Error listening to device2:", error);
+        });
+
+        document.getElementById("logoutBtn").addEventListener("click", async (e) => {
+          e.preventDefault();
+          if (confirm("Are you sure you want to logout?")) {
+            try {
+              const logoutBtn = document.getElementById("logoutBtn");
+              logoutBtn.innerHTML =
+                '<i class="fas fa-spinner fa-spin mr-2"></i> Logging out...';
+
+              await auth.signOut();
+              localStorage.removeItem("user");
+              window.location.href = "signin.html";
+            } catch (error) {
+              console.error("Logout error:", error);
+              alert("Logout failed. Please try again.");
+            }
+          }
+        });
+      });
+    </script>
+    <style>
+      .chart-container {
+        width: 100%;
+        height: 300px;
+      }
+      .device-card {
+        transition: all 0.3s ease;
+      }
+      .device-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      }
+      #sidebar:hover .nav-text {
+        display: inline-block;
+        opacity: 1;
+        transition: opacity 0.3s ease-in-out;
+      }
+      #sidebar .nav-text {
+        display: none;
+        opacity: 1;
+        transition: opacity 0.3s ease-in-out;
+      }
+      .gauge-container {
+        width: 280px;
+        height: 280px;
+      }
+    </style>
+</head>
+<body class="bg-gray-100">
+  <div class="flex h-screen">
+    <!-- Sidebar -->
+    <div
+      id="sidebar"
+      class="bg-blue-800 text-white w-16 hover:w-64 p-4 transition-all duration-300 ease-in-out flex flex-col overflow-hidden"
+    >
+      <div class="flex justify-between items-center mb-8">
+        <img src="logo.png" alt="aqi" width="80px" height="80px" />
+        <button onclick="toggleSidebar()" class="text-white focus:outline-none"></button>
+      </div>
+      <nav class="flex-1">
+        <!-- Dashboard -->
+        <a
+          href="dashboard.html"
+          class="flex items-center py-2 px-4 rounded hover:bg-blue-700 mb-2"
+        >
+          <i class="fas fa-tachometer-alt mr-2 w-6 text-center"></i>
+          <span class="nav-text">Dashboard</span>
+        </a>
+
+        <!-- Devices -->
+        <div class="mb-2">
+          <div
+            class="flex items-center py-2 px-4 rounded hover:bg-blue-700 cursor-pointer"
+            onclick="toggleSubmenu('devices')"
+          >
+            <i class="fas fa-microchip mr-2 w-6 text-center"></i>
+            <span class="nav-text">Devices</span>
+            <i class="fas fa-chevron-down ml-auto nav-text text-xs"></i>
+          </div>
+          <div id="devices-submenu" class="pl-8 flex flex-col">
+            <a href="device1.html" class="block py-2 hover:text-blue-200 nav-text"
+              >Device 1</a
+            >
+            <a href="device2.html" class="block py-2 hover:text-blue-200 nav-text"
+              >Device 2</a
+            >
+          </div>
+        </div>
+
+        <!-- Notifications -->
+        <a
+          href="notifications.html"
+          class="flex items-center py-2 px-4 rounded hover:bg-blue-700 mb-2"
+        >
+          <i class="fas fa-bell mr-2 w-6 text-center"></i>
+          <span class="nav-text">Notifications</span>
+        </a>
+
+        <!-- Settings -->
+        <div class="mb-2">
+          <div
+            class="flex items-center py-2 px-4 rounded hover:bg-blue-700 cursor-pointer"
+            onclick="toggleSubmenu('settings')"
+          >
+            <i class="fas fa-cog mr-2 w-6 text-center"></i>
+            <span class="nav-text">Settings</span>
+            <i class="fas fa-chevron-down ml-auto nav-text text-xs"></i>
+          </div>
+          <div id="settings-submenu" class="pl-8 hidden">
+            <a
+              href="notification-settings.html"
+              class="block py-2 hover:text-blue-200 nav-text"
+              >Notification Settings</a
+            >
+            <a
+              href="device-settings.html"
+              class="block py-2 hover:text-blue-200 nav-text"
+              >Device Settings</a
+            >
+            <a
+              href="user-preferences.html"
+              class="block py-2 hover:text-blue-200 nav-text"
+              >User Preferences</a
+            >
+          </div>
+        </div>
+
+        <!-- Help & Support -->
+        <div class="mb-2">
+          <div
+            class="flex items-center py-2 px-4 rounded hover:bg-blue-700 cursor-pointer"
+            onclick="toggleSubmenu('help')"
+          >
+            <i class="fas fa-question-circle mr-2 w-6 text-center"></i>
+            <span class="nav-text">Help & Support</span>
+            <i class="fas fa-chevron-down ml-auto nav-text text-xs"></i>
+          </div>
+          <div id="help-submenu" class="pl-8 hidden">
+            <a
+              href="user-guide.html"
+              class="block py-2 hover:text-blue-200 nav-text"
+              >User Guide</a
+            >
+            <a
+              href="customer-support.html"
+              class="block py-2 hover:text-blue-200 nav-text"
+              >Customer Support</a
+            >
+          </div>
+        </div>
+
+        <!-- Logout -->
+        <a
+          href="/api/auth/logout"
+          id="logoutBtn"
+          class="flex items-center py-2 px-4 rounded hover:bg-blue-700 mt-auto"
+        >
+          <i class="fas fa-sign-out-alt mr-2 w-6 text-center"></i>
+          <span class="nav-text">Logout</span>
+        </a>
+      </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex-1 p-8 overflow-auto">
+      <div class="flex justify-between items-center mb-6">
+        <!-- Device Card -->
+        <div class="device-card bg-white rounded-lg shadow p-4">
+          <div class="flex items-center">
+            <div class="w-3 h-3 rounded-full bg-green-500 mr-2"></div>
+            <h2 class="text-xl font-semibold">Device 2</h2>
+            <p
+              class="ml-2 text-gray-700 bg-gray-200 px-2 py-1 rounded-md device2-location"
+            >
+              Ugac Sur
+            </p>
+          </div>
+        </div>
+
+        <!-- Timeframe Selector -->
+        <div>
+          <select onchange="updateCharts(this.value)" class="border border-gray-300 rounded px-3 py-2">
+            <option value="5m" selected>5 Minutes</option>
+            <option value="30m">30 Minutes</option>
+            <option value="1h">1 Hour</option>
+            <option value="12h">12 Hours</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- PM Chart -->
+      <div class="mb-6">
+        <div class="bg-white p-4 rounded-lg shadow">
+          <h3 class="text-lg font-semibold mb-4">Particulate Matter (PM)</h3>
+          <div class="chart-container">
+            <canvas id="pmChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Combined Gas Chart -->
+      <div class="mb-6">
+        <div class="bg-white p-4 rounded-lg shadow">
+          <h3 class="text-lg font-semibold mb-4">Gas Concentrations</h3>
+          <div class="chart-container">
+            <canvas id="gasChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Gauge Charts -->
+      <div class="flex flex-col md:flex-row justify-between mb-6 gap-4">
+        <!-- AQI Gauge -->
+        <div class="bg-white p-4 rounded-lg shadow w-full md:w-1/3">
+          <h3 class="text-lg font-semibold mb-4 text-center">AQI</h3>
+          <div class="flex justify-center">
+            <div id="aqiGauge" class="gauge-container"></div>
+          </div>
+        </div>
+
+        <!-- Temperature Gauge -->
+        <div class="bg-white p-4 rounded-lg shadow w-full md:w-1/3">
+          <h3 class="text-lg font-semibold mb-4 text-center">Temperature</h3>
+          <div class="flex justify-center">
+            <div id="tempGauge" class="gauge-container"></div>
+          </div>
+        </div>
+
+        <!-- Humidity Gauge -->
+        <div class="bg-white p-4 rounded-lg shadow w-full md:w-1/3">
+          <h3 class="text-lg font-semibold mb-4 text-center">Humidity</h3>
+          <div class="flex justify-center">
+            <div id="humidityGauge" class="gauge-container"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      restoreMenuState();
+    });
+
+    function toggleSubmenu(menu) {
+      let submenu = document.getElementById(menu + "-submenu");
+
+      if (submenu.classList.contains("hidden")) {
+        submenu.classList.remove("hidden");
+        localStorage.setItem(menu + "-submenu", "open");
+      } else {
+        submenu.classList.add("hidden");
+        localStorage.setItem(menu + "-submenu", "closed");
+      }
+    }
+
+    function restoreMenuState() {
+      let menus = ["settings", "help"];
+
+      menus.forEach((menu) => {
+        let state = localStorage.getItem(menu + "-submenu");
+        let submenu = document.getElementById(menu + "-submenu");
+
+        if (submenu) {
+          if (state === "open") {
+            submenu.classList.remove("hidden");
+          } else {
+            submenu.classList.add("hidden");
+          }
+        }
+      });
+    }
+
+    // Initialize charts
+    let pmChart, gasChart;
+    let aqiChart, tempChart, humidityChart;
+
+    function createGaugeOption(name, value, max) {
+      return {
+        series: [
+          {
+            name: name,
+            type: "gauge",
+            startAngle: 180,
+            endAngle: 0,
+            min: 0,
+            max: max,
+            splitNumber: 5,
+            axisLine: {
+              lineStyle: {
+                width: 10,
+                color: [
+                  [0.3, "#10B981"],
+                  [0.6, "#F59E0B"],
+                  [1, "#EF4444"],
+                ],
+              },
+            },
+            pointer: {
+              length: "70%",
+              width: 6,
+            },
+            detail: {
+              formatter: "{value}",
+              fontSize: 24,
+              color: "#111827",
+            },
+            data: [{ value: value, name: name }],
+          },
+        ],
+      };
+    }
+
+    function initCharts() {
+      // PM Chart
+      const pmCtx = document.getElementById("pmChart").getContext("2d");
+      pmChart = new Chart(pmCtx, {
+        type: "line",
+        data: {
+          labels: generateTimeLabels("1d"),
+          datasets: [
+            createDataset("PM1 (µg/m³)", "#EF4444", generateRandomData(24, 0, 50)),
+            createDataset("PM2.5 (µg/m³)", "#F59E0B", generateRandomData(24, 0, 100)),
+            createDataset("PM10 (µg/m³)", "#10B981", generateRandomData(24, 0, 150)),
+          ],
+        },
+        options: createChartOptions("Particulate Matter (µg/m³)"),
+      });
+
+      // Combined Gas Chart
+      const gasCtx = document.getElementById("gasChart").getContext("2d");
+      gasChart = new Chart(gasCtx, {
+        type: "line",
+        data: {
+          labels: generateTimeLabels("1d"),
+          datasets: [
+            createDataset("CO (ppm)", "#EF4444", generateRandomData(24, 0, 10)),
+            createDataset("NO₂ (ppb)", "#8B5CF6", generateRandomData(24, 0, 100)),
+          ],
+        },
+        options: createChartOptions("Concentration"),
+      });
+
+      // Gauge Charts with ECharts
+      aqiChart = echarts.init(document.getElementById("aqiGauge"));
+      tempChart = echarts.init(document.getElementById("tempGauge"));
+      humidityChart = echarts.init(document.getElementById("humidityGauge"));
+
+      aqiChart.setOption(createGaugeOption("AQI", 45, 500));
+      tempChart.setOption(createGaugeOption("Temperature", 22, 50));
+      humidityChart.setOption(createGaugeOption("Humidity", 65, 100));
+    }
+
+    function updateCharts(range) {
+      const labels = generateTimeLabels(range);
+
+      // Update PM Chart
+      pmChart.data.labels = labels;
+      pmChart.data.datasets.forEach((dataset) => {
+        dataset.data = generateRandomData(
+          labels.length,
+          0,
+          dataset.label === "PM1 (µg/m³)"
+            ? 50
+            : dataset.label === "PM2.5 (µg/m³)"
+            ? 100
+            : 150
+        );
+      });
+      pmChart.update();
+
+      // Update Gas Chart
+      gasChart.data.labels = labels;
+      gasChart.data.datasets[0].data = generateRandomData(labels.length, 0, 10); // CO
+      gasChart.data.datasets[1].data = generateRandomData(labels.length, 0, 100); // NO2
+      gasChart.update();
+
+      // Update gauges with random values
+      aqiChart.setOption({
+        series: [{ data: [{ value: Math.random() * 400 + 50, name: "AQI" }] }],
+      });
+      tempChart.setOption({
+        series: [{ data: [{ value: Math.random() * 30 + 10, name: "Temperature" }] }],
+      });
+      humidityChart.setOption({
+        series: [{ data: [{ value: Math.random() * 50 + 30, name: "Humidity" }] }],
+      });
+    }
+
+    function getColorForValue(percent) {
+      if (percent < 0.3) return "#10B981"; // Green
+      if (percent < 0.6) return "#F59E0B"; // Yellow
+      return "#EF4444"; // Red
+    }
+
+    function createDataset(label, color, data) {
+      return {
+        label,
+        data,
+        borderColor: color,
+        backgroundColor: color + "20",
+        borderWidth: 2,
+        tension: 0.3,
+        fill: true,
+      };
+    }
+
+    function createChartOptions(title) {
+      return {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: title,
+            },
+          },
+          x: {
+            title: {
+              display: true,
+              text: "Time",
+            },
+          },
+        },
+      };
+    }
+
+    function generateTimeLabels(range) {
+      const now = new Date();
+      let labels = [];
+      let count = 24; // Default for 1 day
+
+      if (range === "7d") count = 7;
+      if (range === "14d") count = 14;
+      if (range === "1m") count = 30;
+
+      for (let i = count; i >= 0; i--) {
+        const date = new Date(now);
+        if (range === "1d") {
+          date.setHours(now.getHours() - i);
+          labels.push(date.getHours() + ":00");
+        } else {
+          date.setDate(now.getDate() - i);
+          labels.push(date.toLocaleDateString());
+        }
+      }
+      return labels;
+    }
+
+    function generateRandomData(count, min, max) {
+      return Array.from({ length: count }, () =>
+        Math.floor(Math.random() * (max - min + 1)) + min
+      );
+    }
+
+    // Initialize charts when page loads
+    document.addEventListener('DOMContentLoaded', () => {
+        console.log('Initializing charts...');
+        initCharts();
+        updateCharts('1d');
+        console.log('Charts initialized.');
+    });
+  </script>
+</body>
+</html>

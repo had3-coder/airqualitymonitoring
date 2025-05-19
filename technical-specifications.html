@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technical Specifications - AQI Monitor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#10B981',
+                        dark: '#1F2937',
+                        light: '#F9FAFB'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F3F4F6;
+        }
+        
+        .section-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+        }
+        
+        .section-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, #3B82F6, #10B981);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+    </style>
+</head>
+<body>
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <a href="user-guide.html" class="inline-flex items-center text-primary hover:text-primary-dark mb-8 transition-colors duration-200">
+            <i class="fas fa-arrow-left mr-3"></i> 
+            <span class="font-medium">Back to User Guide</span>
+        </a>
+
+        <div class="bg-white rounded-2xl shadow-xl p-8 md:p-10">
+            <header class="mb-12 text-center">
+                <h1 class="text-4xl font-bold text-dark mb-3 gradient-text">Technical Specifications</h1>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">Detailed technical information about the AQI monitoring system</p>
+            </header>
+
+            <section class="mb-12 section-card p-8 rounded-xl border border-gray-100">
+                <div class="flex items-start">
+                    <div class="bg-primary/10 p-3 rounded-lg mr-6">
+                        <i class="fas fa-microchip text-primary text-2xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-semibold text-dark mb-4">Device Overview</h2>
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-secondary mt-1 mr-3"></i>
+                                <div>
+                                    <span class="font-medium text-dark">Product Name:</span>
+                                    <span class="text-gray-600">Cloud-Based Air Quality Monitoring System</span>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-secondary mt-1 mr-3"></i>
+                                <div>
+                                    <span class="font-medium text-dark">Model:</span>
+                                    <span class="text-gray-600">AQI-Monitor v1.0</span>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-secondary mt-1 mr-3"></i>
+                                <div>
+                                    <span class="font-medium text-dark">Power Source:</span>
+                                    <span class="text-gray-600">Solar-powered with LiPo battery backup</span>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-secondary mt-1 mr-3"></i>
+                                <div>
+                                    <span class="font-medium text-dark">Connectivity:</span>
+                                    <span class="text-gray-600">Wi-Fi & GSM for real-time data transmission</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="mb-12 section-card p-8 rounded-xl border border-gray-100">
+                <div class="flex items-start">
+                    <div class="bg-primary/10 p-3 rounded-lg mr-6">
+                        <i class="fas fa-wind text-primary text-2xl"></i>
+                    </div>
+                    <div class="w-full">
+                        <h2 class="text-2xl font-semibold text-dark mb-4">Measured Air Quality Parameters</h2>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Parameter</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Sensor Used</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Measurement Range</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">PM1, PM2.5, PM10</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">PMS7003</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">0 – 1000 µg/m³</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">CO (Carbon Monoxide)</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">MiCS-6814</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">1 – 1000 ppm</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">NO₂ (Nitrogen Dioxide)</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">MiCS-6814</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">50 – 10000 ppb</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Temperature</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">SHT41</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">-40°C to 125°C</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Humidity</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">SHT41</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">0 – 100% RH</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="mb-12 section-card p-8 rounded-xl border border-gray-100">
+                <div class="flex items-start">
+                    <div class="bg-primary/10 p-3 rounded-lg mr-6">
+                        <i class="fas fa-battery-full text-primary text-2xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-semibold text-dark mb-4">Power & Battery Specifications</h2>
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-secondary mt-1 mr-3"></i>
+                                <div>
+                                    <span class="font-medium text-dark">Primary Power Source:</span>
+                                    <span class="text-gray-600">6V 15W Solar Panel</span>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-secondary mt-1 mr-3"></i>
+                                <div>
+                                    <span class="font-medium text-dark">Battery Backup:</span>
+                                    <span class="text-gray-600">3.7V LiPo Battery</span>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-secondary mt-1 mr-3"></i>
+                                <div>
+                                    <span class="font-medium text-dark">Power Consumption:</span>
+                                    <span class="text-gray-600">~200mA during transmission, ~80mA in idle mode</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="mb-12 section-card p-8 rounded-xl border border-gray-100">
+                <div class="flex items-start">
+                    <div class="bg-primary/10 p-3 rounded-lg mr-6">
+                        <i class="fas fa-wifi text-primary text-2xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-semibold text-dark mb-4">Connectivity & Data Transmission</h2>
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-secondary mt-1 mr-3"></i>
+                                <div>
+                                    <span class="font-medium text-dark">Wi-Fi:</span>
+                                    <span class="text-gray-600">ESP8266 (2.4 GHz) for real-time cloud updates</span>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-secondary mt-1 mr-3"></i>
+                                <div>
+                                    <span class="font-medium text-dark">GSM Module:</span>
+                                    <span class="text-gray-600">SIM800L for SMS alerts & backup transmission</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section-card p-8 rounded-xl border border-gray-100">
+                <div class="flex items-start">
+                    <div class="bg-primary/10 p-3 rounded-lg mr-6">
+                        <i class="fas fa-chart-line text-primary text-2xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-semibold text-dark mb-4">Web Dashboard Features</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="flex items-start">
+                                <i class="fas fa-chart-bar text-secondary mt-1 mr-3"></i>
+                                <div>
+                                    <h3 class="font-medium text-dark mb-1">Real-time Graphs</h3>
+                                    <p class="text-gray-600">Using Chart.js for visualization</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-bell text-secondary mt-1 mr-3"></i>
+                                <div>
+                                    <h3 class="font-medium text-dark mb-1">Threshold Alerts</h3>
+                                    <p class="text-gray-600">Browser notifications & SMS</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-cog text-secondary mt-1 mr-3"></i>
+                                <div>
+                                    <h3 class="font-medium text-dark mb-1">Device Management</h3>
+                                    <p class="text-gray-600">Calibration & settings</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-network-wired text-secondary mt-1 mr-3"></i>
+                                <div>
+                                    <h3 class="font-medium text-dark mb-1">Multi-Device Support</h3>
+                                    <p class="text-gray-600">Separate graphs for each device</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <footer class="bg-gray-50 border-t border-gray-200 py-4 mt-12">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-gray-500 text-sm">
+                &copy; AQI 2025. All rights reserved.
+            </p>
+        </div>
+    </footer>
+</body>
+</html>

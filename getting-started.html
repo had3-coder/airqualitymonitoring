@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Getting Started - AQI Monitor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#10B981',
+                        dark: '#1F2937',
+                        light: '#F9FAFB'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F3F4F6;
+        }
+        
+        .section-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+        }
+        
+        .section-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .good { color: #10B981; background-color: #ECFDF5; }
+        .moderate { color: #F59E0B; background-color: #FEF3C7; }
+        .sensitive { color: #F97316; background-color: #FFEDD5; }
+        .unhealthy { color: #EF4444; background-color: #FEE2E2; }
+        .very-unhealthy { color: #8B5CF6; background-color: #EDE9FE; }
+        .hazardous { color: #7C3AED; background-color: #E9D5FF; }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, #3B82F6, #10B981);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <a href="user-guide.html" class="inline-flex items-center text-primary hover:text-primary-dark mb-8 transition-colors duration-200">
+            <i class="fas fa-arrow-left mr-3"></i> 
+            <span class="font-medium">Back to User Guide</span>
+        </a>
+
+        <div class="bg-white rounded-2xl shadow-xl p-8 md:p-10">
+            <header class="mb-12 text-center">
+                <h1 class="text-4xl font-bold text-dark mb-3 gradient-text">Getting Started</h1>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">Learn how to set up and use our advanced AQI monitoring system with this comprehensive guide</p>
+            </header>
+
+            <section class="mb-12 section-card p-8 rounded-xl border border-gray-100">
+                <div class="flex items-start">
+                    <div class="bg-primary/10 p-3 rounded-lg mr-6">
+                        <i class="fas fa-globe text-primary text-2xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-semibold text-dark mb-4">Overview of the AQI System</h2>
+                        <p class="text-gray-600 mb-5 leading-relaxed">Our cutting-edge Air Quality Monitoring System provides real-time tracking of pollution levels with industry-leading accuracy.</p>
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-secondary mt-1 mr-3"></i>
+                                <span class="text-gray-700">Real-time monitoring of PM2.5, PM10, VOCs and more</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-secondary mt-1 mr-3"></i>
+                                <span class="text-gray-700">Customizable alerts via SMS/email</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-secondary mt-1 mr-3"></i>
+                                <span class="text-gray-700">Solar-powered</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="mb-12 section-card p-8 rounded-xl border border-gray-100">
+                <div class="flex items-start">
+                    <div class="bg-primary/10 p-3 rounded-lg mr-6">
+                        <i class="fas fa-user-plus text-primary text-2xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-semibold text-dark mb-6">Create Your Account</h2>
+                        <div class="space-y-6">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 bg-secondary/10 text-secondary rounded-full w-8 h-8 flex items-center justify-center mr-4 mt-0.5">
+                                    <span class="font-bold">1</span>
+                                </div>
+                                <div>
+                                    <h3 class="font-medium text-dark mb-1">Visit Our Platform</h3>
+                                    <p class="text-gray-600">Go to dashboard.aqimonitor.com</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 bg-secondary/10 text-secondary rounded-full w-8 h-8 flex items-center justify-center mr-4 mt-0.5">
+                                    <span class="font-bold">2</span>
+                                </div>
+                                <div>
+                                    <h3 class="font-medium text-dark mb-1">Sign Up</h3>
+                                    <p class="text-gray-600">Click Sign Up and enter your details</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 bg-secondary/10 text-secondary rounded-full w-8 h-8 flex items-center justify-center mr-4 mt-0.5">
+                                    <span class="font-bold">3</span>
+                                </div>
+                                <div>
+                                    <h3 class="font-medium text-dark mb-1">Access Dashboard</h3>
+                                    <p class="text-gray-600">Log in to view your air quality data</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="mb-12 section-card p-8 rounded-xl border border-gray-100">
+                <div class="flex items-start">
+                    <div class="bg-primary/10 p-3 rounded-lg mr-6">
+                        <i class="fas fa-chart-line text-primary text-2xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-semibold text-dark mb-4">Dashboard Overview</h2>
+                        <p class="text-gray-600 mb-5 leading-relaxed">Our intuitive dashboard provides comprehensive air quality insights at a glance.</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="flex items-start">
+                                <i class="fas fa-chart-bar text-secondary mt-1 mr-3"></i>
+                                <div>
+                                    <h3 class="font-medium text-dark mb-1">Live Data Panel</h3>
+                                    <p class="text-gray-600">Current AQI, PM2.5, PM10 and VOC levels</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-chart-pie text-secondary mt-1 mr-3"></i>
+                                <div>
+                                    <h3 class="font-medium text-dark mb-1">Trend Analysis</h3>
+                                    <p class="text-gray-600">Historical data visualization</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-bell text-secondary mt-1 mr-3"></i>
+                                <div>
+                                    <h3 class="font-medium text-dark mb-1">Alerts System</h3>
+                                    <p class="text-gray-600">Color-coded AQI status indicators</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-microchip text-secondary mt-1 mr-3"></i>
+                                <div>
+                                    <h3 class="font-medium text-dark mb-1">Device Status</h3>
+                                    <p class="text-gray-600">Battery, connectivity and sensor health</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section-card p-8 rounded-xl border border-gray-100">
+                <div class="flex items-start">
+                    <div class="bg-primary/10 p-3 rounded-lg mr-6">
+                        <i class="fas fa-table text-primary text-2xl"></i>
+                    </div>
+                    <div class="w-full">
+                        <h2 class="text-2xl font-semibold text-dark mb-4">AQI Value Interpretation</h2>
+                        <p class="text-gray-600 mb-5 leading-relaxed">Understand what the air quality index values mean for your health:</p>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">AQI Level</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">PM2.5 (µg/m³)</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">PM10 (µg/m³)</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Health Effects</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">0-50</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">0-12</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">0-54</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium good">Good</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Minimal impact</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">51-100</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">12.1-35.4</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">55-154</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium moderate">Moderate</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Mild irritation for sensitive groups</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">101-150</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">35.5-55.4</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">155-254</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium sensitive">Unhealthy (Sensitive Groups)</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Respiratory effects for children, elderly</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">151-200</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">55.5-150.4</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">255-354</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium unhealthy">Unhealthy</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Discomfort, breathing issues</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">201-300</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">150.5-250.4</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">355-424</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium very-unhealthy">Very Unhealthy</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Health warnings issued</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">301+</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">250.5+</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">425+</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium hazardous">Hazardous</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Serious health risks</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <footer class="bg-gray-50 border-t border-gray-200 py-4 mt-12">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-gray-500 text-sm">
+                &copy; AQI 2025. All rights reserved.
+            </p>
+        </div>
+    </footer>
+</body>
+</html>

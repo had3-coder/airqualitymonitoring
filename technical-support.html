@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technical Support - AQI Monitor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#10B981',
+                        dark: '#1F2937',
+                        light: '#F9FAFB'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F3F4F6;
+        }
+        
+        .section-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+        }
+        
+        .section-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, #3B82F6, #10B981);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+    </style>
+</head>
+<body>
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <a href="user-guide.html" class="inline-flex items-center text-primary hover:text-primary-dark mb-8 transition-colors duration-200">
+            <i class="fas fa-arrow-left mr-3"></i> 
+            <span class="font-medium">Back to User Guide</span>
+        </a>
+
+        <div class="bg-white rounded-2xl shadow-xl p-8 md:p-10">
+            <header class="mb-12 text-center">
+                <h1 class="text-4xl font-bold text-dark mb-3 gradient-text">Technical Support</h1>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">Find solutions to common issues and contact information</p>
+            </header>
+
+            <section class="mb-12 section-card p-8 rounded-xl border border-gray-100">
+                <div class="flex items-start">
+                    <div class="bg-primary/10 p-3 rounded-lg mr-6">
+                        <i class="fas fa-question-circle text-primary text-2xl"></i>
+                    </div>
+                    <div class="w-full">
+                        <h2 class="text-2xl font-semibold text-dark mb-4">Common Issues & Solutions</h2>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Issue</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Possible Causes</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Solutions</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Device Not Connecting to Wi-Fi/GSM</td>
+                                        <td class="px-6 py-4 text-sm text-gray-500">
+                                            <ul class="list-disc pl-5 space-y-1">
+                                                <li>Weak Wi-Fi or GSM signal</li>
+                                                <li>Incorrect network credentials</li>
+                                                <li>SIM card not activated or out of balance</li>
+                                            </ul>
+                                        </td>
+                                        <td class="px-6 py-4 text-sm text-gray-500">
+                                            <ul class="list-disc pl-5 space-y-1">
+                                                <li>Check Wi-Fi/GSM signal strength</li>
+                                                <li>Verify network credentials</li>
+                                                <li>Restart the device</li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">No Data Appearing on Dashboard</td>
+                                        <td class="px-6 py-4 text-sm text-gray-500">
+                                            <ul class="list-disc pl-5 space-y-1">
+                                                <li>Sensor connection issue</li>
+                                                <li>No internet connectivity</li>
+                                                <li>Server issue</li>
+                                            </ul>
+                                        </td>
+                                        <td class="px-6 py-4 text-sm text-gray-500">
+                                            <ul class="list-disc pl-5 space-y-1">
+                                                <li>Check sensor connections</li>
+                                                <li>Test internet connection</li>
+                                                <li>Restart device and refresh dashboard</li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="mb-12 section-card p-8 rounded-xl border border-gray-100">
+                <div class="flex items-start">
+                    <div class="bg-primary/10 p-3 rounded-lg mr-6">
+                        <i class="fas fa-tools text-primary text-2xl"></i>
+                    </div>
+                    <div class="w-full">
+                        <h2 class="text-2xl font-semibold text-dark mb-4">Reset & Recalibrate Sensors</h2>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Sensor</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Recalibration Steps</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">PMS7003 (Particulate Matter Sensor)</td>
+                                        <td class="px-6 py-4 text-sm text-gray-500">
+                                            <ul class="list-disc pl-5 space-y-1">
+                                                <li>Power off the device</li>
+                                                <li>Place in clean air environment for 10 minutes</li>
+                                                <li>Restart and allow stabilization</li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">MiCS-6814 (Gas Sensor)</td>
+                                        <td class="px-6 py-4 text-sm text-gray-500">
+                                            <ul class="list-disc pl-5 space-y-1">
+                                                <li>Place in a ventilated area for 5-10 minutes</li>
+                                                <li>Power cycle the device</li>
+                                                <li>Avoid exposure to high humidity and extreme temperatures</li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">SHT41 (Temperature & Humidity Sensor)</td>
+                                        <td class="px-6 py-4 text-sm text-gray-500">
+                                            <ul class="list-disc pl-5 space-y-1">
+                                                <li>If inaccurate, restart the device and ensure proper placement</li>
+                                                <li>If issues persist, replace the sensor</li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section-card p-8 rounded-xl border border-gray-100">
+                <div class="flex items-start">
+                    <div class="bg-primary/10 p-3 rounded-lg mr-6">
+                        <i class="fas fa-headset text-primary text-2xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-semibold text-dark mb-4">Contact Support</h2>
+                        <ul class="space-y-3">
+                            <li class="flex items-center">
+                                <i class="fas fa-envelope text-secondary mr-3"></i>
+                                <span class="text-gray-600">Email: aqimonitoring@gmail.com</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <footer class="bg-gray-50 border-t border-gray-200 py-4 mt-12">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-gray-500 text-sm">
+                &copy; AQI 2025. All rights reserved.
+            </p>
+        </div>
+    </footer>
+</body>
+</html>

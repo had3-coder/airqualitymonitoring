@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Device Settings - AQI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+  
+  <!-- Firebase Integration -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyBawdAvivw24kEJJcZ8pjOVKLnUCPlWxig",
+      authDomain: "project-aqi-43620.firebaseapp.com",
+      projectId: "project-aqi-43620",
+      storageBucket: "project-aqi-43620.appspot.com",
+      messagingSenderId: "853048957452",
+      appId: "1:853048957452:web:51b30fd41cab4658cdec29",
+      measurementId: "G-MVKRVKVVB0"
+    };
+    const app = firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+  </script>
+
+  <style>
+    .device-card { transition: all 0.3s ease; }
+    .device-card:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+    #sidebar:hover .nav-text { display: inline-block; opacity: 1; transition: opacity 0.3s ease-in-out; }
+    #sidebar .nav-text { display: none; opacity: 1; transition: opacity 0.3s ease-in-out; }
+  </style>
+</head>
+<body class="bg-gray-100">
+  <div class="flex h-screen">
+    <!-- Sidebar -->
+    <div id="sidebar" class="bg-blue-800 text-white w-16 hover:w-64 p-4 transition-all duration-300 ease-in-out flex flex-col overflow-hidden">
+      <div class="flex justify-between items-center mb-8">
+        <img src="logo.png" alt="aqi" width="80px" height="80px">
+        <button onclick="toggleSidebar()" class="text-white focus:outline-none"></button>
+      </div>
+      <nav class="flex-1">
+        <a href="dashboard.html" class="flex items-center py-2 px-4 rounded hover:bg-blue-700 mb-2">
+          <i class="fas fa-tachometer-alt mr-2 w-6 text-center"></i>
+          <span class="nav-text">Dashboard</span>
+        </a>
+
+        <div class="mb-2">
+          <div class="flex items-center py-2 px-4 rounded hover:bg-blue-700 cursor-pointer" onclick="toggleSubmenu('devices')">
+            <i class="fas fa-microchip mr-2 w-6 text-center"></i>
+            <span class="nav-text">Devices</span>
+            <i class="fas fa-chevron-down ml-auto nav-text text-xs"></i>
+          </div>
+          <div id="devices-submenu" class="pl-8 hidden flex flex-col">
+            <a href="device1.html" class="block py-2 hover:text-blue-200 nav-text">Device 1</a>
+            <a href="device2.html" class="block py-2 hover:text-blue-200 nav-text">Device 2</a>
+          </div>
+        </div>
+
+        <a href="notifications.html" class="flex items-center py-2 px-4 rounded hover:bg-blue-700 mb-2">
+          <i class="fas fa-bell mr-2 w-6 text-center"></i>
+          <span class="nav-text">Notifications</span>
+        </a>
+
+        <div class="mb-2">
+          <div class="flex items-center py-2 px-4 rounded hover:bg-blue-700 cursor-pointer" onclick="toggleSubmenu('settings')">
+            <i class="fas fa-cog mr-2 w-6 text-center"></i>
+            <span class="nav-text">Settings</span>
+            <i class="fas fa-chevron-down ml-auto nav-text text-xs"></i>
+          </div>
+          <div id="settings-submenu" class="pl-8 flex flex-col">
+            <a href="notification-settings.html" class="block py-2 hover:text-blue-200 nav-text">Notification Settings</a>
+            <a href="device-settings.html" class="block py-2 text-blue-200 nav-text">Device Settings</a>
+            <a href="user-preferences.html" class="block py-2 hover:text-blue-200 nav-text">User Preferences</a>
+          </div>
+        </div>
+
+        <div class="mb-2">
+          <div class="flex items-center py-2 px-4 rounded hover:bg-blue-700 cursor-pointer" onclick="toggleSubmenu('help')">
+            <i class="fas fa-question-circle mr-2 w-6 text-center"></i>
+            <span class="nav-text">Help & Support</span>
+            <i class="fas fa-chevron-down ml-auto nav-text text-xs"></i>
+          </div>
+          <div id="help-submenu" class="pl-8 hidden">
+            <a href="user-guide.html" class="block py-2 hover:text-blue-200 nav-text">User Guide</a>
+            <a href="customer-support.html" class="block py-2 hover:text-blue-200 nav-text">Customer Support</a>
+          </div>
+        </div>
+
+        <a href="#" id="logoutBtn" class="flex items-center py-2 px-4 rounded hover:bg-blue-700 mt-auto">
+          <i class="fas fa-sign-out-alt mr-2 w-6 text-center"></i>
+          <span class="nav-text">Logout</span>
+        </a>
+      </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex-1 p-8 overflow-auto">
+      <h1 class="text-2xl font-bold text-gray-800 mb-6">Device Settings</h1>
+      
+      <!-- Device 1 -->
+      <div class="device-card bg-white rounded-lg shadow p-6">
+        <div class="flex items-center mb-4">
+          <div class="w-3 h-3 rounded-full bg-green-500 mr-2"></div>
+          <h2 class="text-xl font-semibold">Device 1</h2>
+          <div class="ml-4">
+            <button onclick="editDevice('device1')" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
+              <i class="fas fa-edit mr-2"></i>Edit Location
+            </button>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <p class="text-gray-500 text-sm">Location:</p>
+            <p class="text-lg font-medium device1-location">Ugac Norte</p>
+          </div>
+          <div>
+            <p class="text-gray-500 text-sm">Status:</p>
+            <p class="text-lg font-medium">Active</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Device 2 -->
+      <div class="device-card bg-white rounded-lg shadow p-6 mt-4">
+        <div class="flex items-center mb-4">
+          <div class="w-3 h-3 rounded-full bg-green-500 mr-2"></div>
+          <h2 class="text-xl font-semibold">Device 2</h2>
+          <div class="ml-4">
+            <button onclick="editDevice('device2')" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
+              <i class="fas fa-edit mr-2"></i>Edit Location
+            </button>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <p class="text-gray-500 text-sm">Location:</p>
+            <p class="text-lg font-medium device2-location">Ugac Sur</p>
+          </div>
+          <div>
+            <p class="text-gray-500 text-sm">Status:</p>
+            <p class="text-lg font-medium">Active</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+   <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // Set up real-time listeners for both devices
+    setupDeviceListener('device1');
+    setupDeviceListener('device2');
+  });
+  
+  function setupDeviceListener(deviceId) {
+    db.collection('devices').doc(deviceId).onSnapshot((doc) => {
+      if (doc.exists) {
+        const data = doc.data();
+        const locationElement = document.querySelector(`.${deviceId}-location`);
+        if (locationElement) {
+          locationElement.textContent = data.location || 'Not Set';
+        }
+      }
+    }, (error) => {
+      console.error(`Error listening to ${deviceId}:`, error);
+    });
+  }
+  
+  function editDevice(deviceId) {
+    if (!auth.currentUser) {
+      alert("You must be logged in to update device settings.");
+      return;
+    }
+    const locationElement = document.querySelector(`.${deviceId}-location`);
+    if (!locationElement) return;
+  
+    const currentLocation = locationElement.textContent;
+    const newLocation = prompt("Enter new location:", currentLocation);
+  
+    if (newLocation && newLocation.trim() !== "") {
+      db.collection("devices").doc(deviceId).set({ 
+        location: newLocation.trim() 
+      }, { merge: true })
+      .then(() => {
+        console.log(`Location for ${deviceId} updated successfully.`);
+        locationElement.textContent = newLocation.trim();
+      })
+      .catch((error) => {
+        console.error("Error updating location:", error);
+        alert("Failed to update location: " + error.message);
+      });
+    }
+  }
+
+    function toggleSubmenu(menu) {
+      let submenu = document.getElementById(menu + "-submenu");
+      if (submenu.classList.contains("hidden")) {
+        submenu.classList.remove("hidden");
+        localStorage.setItem(menu + "-submenu", "open");
+      } else {
+        submenu.classList.add("hidden");
+        localStorage.setItem(menu + "-submenu", "closed");
+      }
+    }
+
+    function restoreMenuState() {
+      let menus = ["settings", "help"];
+      menus.forEach(menu => {
+        let state = localStorage.getItem(menu + "-submenu");
+        let submenu = document.getElementById(menu + "-submenu");
+        if (submenu) {
+          submenu.classList.toggle("hidden", state !== "open");
+        }
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      restoreMenuState();
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+      document.getElementById('logoutBtn').addEventListener('click', async (e) => {
+        e.preventDefault();
+        if (confirm('Are you sure you want to logout?')) {
+          try {
+            const logoutBtn = document.getElementById('logoutBtn');
+            logoutBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Logging out...';
+
+            await auth.signOut();
+            localStorage.removeItem('user');
+            window.location.href = 'signin.html';
+          } catch (error) {
+            console.error('Logout error:', error);
+            alert('Logout failed. Please try again.');
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>

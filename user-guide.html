@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Guide - Air Quality Monitor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        #sidebar:hover .nav-text {
+            display: inline-block;
+            opacity: 1;
+            transition: opacity 0.3s ease-in-out;
+        }
+        #sidebar .nav-text {
+            display: none;
+            opacity: 1;
+            transition: opacity 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="flex h-screen">
+         <!-- Sidebar -->
+    <div id="sidebar" class="bg-blue-800 text-white w-16 hover:w-64 p-4 transition-all duration-300 ease-in-out flex flex-col overflow-hidden">
+        <div class="flex justify-between items-center mb-8">
+            <img src="logo.png" alt="aqi" width="80px" height="80px">
+            <button onclick="toggleSidebar()" class="text-white focus:outline-none">
+            </button>
+        </div>
+        <nav class="flex-1">
+            <!-- Dashboard -->
+            <a href="dashboard.html" class="flex items-center py-2 px-4 rounded hover:bg-blue-700 mb-2">
+                <i class="fas fa-tachometer-alt mr-2 w-6 text-center"></i>
+                <span class="nav-text">Dashboard</span>
+            </a>
+    
+            <!-- Devices -->
+            <div class="mb-2">
+                <div class="flex items-center py-2 px-4 rounded hover:bg-blue-700 cursor-pointer" onclick="toggleSubmenu('devices')">
+                    <i class="fas fa-microchip mr-2 w-6 text-center"></i>
+                    <span class="nav-text">Devices</span>
+                    <i class="fas fa-chevron-down ml-auto nav-text text-xs"></i>
+                </div>
+                <div id="devices-submenu" class="pl-8 flex flex-col">
+                    <a href="device1.html" class="block py-2 hover:text-blue-200 nav-text">Device 1</a>
+                    <a href="device2.html" class="block py-2 hover:text-blue-200 nav-text">Device 2</a>
+                </div>
+            </div>
+    
+            <!-- Notifications -->
+            <a href="notifications.html" class="flex items-center py-2 px-4 rounded hover:bg-blue-700 mb-2">
+                <i class="fas fa-bell mr-2 w-6 text-center"></i>
+                <span class="nav-text">Notifications</span>
+            </a>
+    
+            <!-- Settings -->
+            <div class="mb-2">
+                <div class="flex items-center py-2 px-4 rounded hover:bg-blue-700 cursor-pointer" onclick="toggleSubmenu('settings')">
+                    <i class="fas fa-cog mr-2 w-6 text-center"></i>
+                    <span class="nav-text">Settings</span>
+                    <i class="fas fa-chevron-down ml-auto nav-text text-xs"></i>
+                </div>
+                <div id="settings-submenu" class="pl-8 hidden">
+                    <a href="notification-settings.html" class="block py-2 hover:text-blue-200 nav-text">Notification Settings</a>
+                    <a href="device-settings.html" class="block py-2 hover:text-blue-200 nav-text">Device Settings</a>
+                    <a href="user-preferences.html" class="block py-2 hover:text-blue-200 nav-text">User Preferences</a>
+                </div>
+            </div>
+
+            <!-- Help & Support -->
+            <div class="mb-2">
+                <div class="flex items-center py-2 px-4 rounded hover:bg-blue-700 cursor-pointer" onclick="toggleSubmenu('help')">
+                    <i class="fas fa-question-circle mr-2 w-6 text-center"></i>
+                    <span class="nav-text">Help & Support</span>
+                    <i class="fas fa-chevron-down ml-auto nav-text text-xs"></i>
+                </div>
+                <div id="help-submenu" class="pl-8 hidden">
+                    <a href="user-guide.html" class="block py-2 hover:text-blue-200 nav-text">User Guide</a>
+                    <a href="customer-support.html" class="block py-2 hover:text-blue-200 nav-text">Customer Support</a>
+                </div>
+            </div>
+            
+            <!-- Logout -->
+            <a href="/api/auth/logout" class="flex items-center py-2 px-4 rounded hover:bg-blue-700 mt-auto">
+                <i class="fas fa-sign-out-alt mr-2 w-6 text-center"></i>
+                <span class="nav-text">Logout</span>
+            </a>
+        </nav>
+    </div>    
+
+
+<!-- Main Content -->
+<div class="flex-1 p-8 overflow-auto">
+    <h1 class="text-2xl font-bold text-gray-800 mb-6">User Guide</h1>
+    
+    <div class="bg-white rounded-lg shadow p-6">
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <a href="getting-started.html" class="block group">
+                <div class="bg-gray-50 p-6 rounded-lg transition-all duration-300 group-hover:bg-blue-50 group-hover:shadow-md">
+                    <div class="text-blue-500 text-3xl mb-4">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">Getting Started</h3>
+                    <p class="text-gray-600">Easy setup, clear instructions. Reach out if needed.</p>
+                </div>
+            </a>
+            
+            <a href="technical-specifications.html" class="block group">
+                <div class="bg-gray-50 p-6 rounded-lg transition-all duration-300 group-hover:bg-blue-50 group-hover:shadow-md">
+                    <div class="text-blue-500 text-3xl mb-4">
+                        <i class="fas fa-cog"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">Technical Specifications</h3>
+                    <p class="text-gray-600">Product details at a glance. Quick support available.</p>
+                </div>
+            </a>
+            
+            <a href="technical-support.html" class="block group">
+                <div class="bg-gray-50 p-6 rounded-lg transition-all duration-300 group-hover:bg-blue-50 group-hover:shadow-md">
+                    <div class="text-blue-500 text-3xl mb-4">
+                        <i class="fas fa-life-ring"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">Technical Support</h3>
+                    <p class="text-gray-600">Help is a click away. FAQs, troubleshooting, and feedback options.</p>
+                </div>
+            </a>
+            
+            <a href="safety-warnings.html" class="block group">
+                <div class="bg-gray-50 p-6 rounded-lg transition-all duration-300 group-hover:bg-blue-50 group-hover:shadow-md">
+                    <div class="text-blue-500 text-3xl mb-4">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">Safety Warnings</h3>
+                    <p class="text-gray-600">Prioritize safety. Emergency procedures outlined.</p>
+                </div>
+            </a>
+        </section>
+    </div>
+</div>
+</div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            restoreMenuState();
+        });
+    
+        function toggleSubmenu(menu) {
+            let submenu = document.getElementById(menu + "-submenu");
+            
+            if (submenu.classList.contains("hidden")) {
+                submenu.classList.remove("hidden");
+                localStorage.setItem(menu + "-submenu", "open");
+            } else {
+                submenu.classList.add("hidden");
+                localStorage.setItem(menu + "-submenu", "closed");
+            }
+        }
+        
+        function restoreMenuState() {
+            let menus = ["settings", "help"];
+        
+            menus.forEach(menu => {
+                let state = localStorage.getItem(menu + "-submenu");
+                let submenu = document.getElementById(menu + "-submenu");
+                
+                if (submenu) {
+                    if (state === "open") {
+                        submenu.classList.remove("hidden");
+                    } else {
+                        submenu.classList.add("hidden");
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
